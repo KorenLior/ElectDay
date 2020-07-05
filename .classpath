@@ -18,10 +18,10 @@
 	<classpathentry kind="lib" path="C:/Users/liork/.p2/pool/plugins/org.eclipse.ui.workbench_3.118.0.v20200222-0719.jar" sourcepath="C:/Users/liork/.p2/pool/plugins/org.eclipse.ui.workbench_3.118.0.v20200222-0719.jar"/>
 	<classpathentry kind="lib" path="C:/Users/liork/.p2/pool/plugins/com.ibm.icu_64.2.0.v20190507-1337.jar" sourcepath="C:/Users/liork/.p2/pool/plugins/com.ibm.icu_64.2.0.v20190507-1337.jar"/>
 	<classpathentry kind="lib" path="C:/Users/liork/.p2/pool/plugins/org.eclipse.ui.forms_3.9.0.v20200213-1442.jar" sourcepath="C:/Users/liork/.p2/pool/plugins/org.eclipse.ui.forms_3.9.0.v20200213-1442.jar"/>
-	<classpathentry kind="lib" path="src/Access/commons-lang-2.6.jar"/>
-	<classpathentry kind="lib" path="src/Access/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="src/Access/hsqldb.jar"/>
-	<classpathentry kind="lib" path="src/Access/jackcess-2.1.6.jar"/>
+	<classpathentry kind="lib" path="src/Access/commons-lang3-3.8.1.jar"/>
+	<classpathentry kind="lib" path="src/Access/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="src/Access/hsqldb-2.5.0.jar"/>
+	<classpathentry kind="lib" path="src/Access/jackcess-3.0.1.jar"/>
 	<classpathentry kind="lib" path="src/Access/ucanaccess-4.0.2.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
