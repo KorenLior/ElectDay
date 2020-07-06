@@ -3,10 +3,9 @@ package Entity;
 
 public class Branch {
 	private int branchNum, managerId, transportRepId;
-	public Branch(int branchNum, int managerId, int transportRepId) {
+	public Branch(int branchNum, int managerId) {
 		this.branchNum = branchNum;
 		this.managerId = managerId;
-		this.transportRepId = transportRepId;
 	}
 	public int getBranchNum() {
 		return branchNum;
@@ -14,8 +13,6 @@ public class Branch {
 	public int getManagerId() {
 		return managerId;
 	}
-	public int getTransportRepId() {
-		return transportRepId;
-	}
+	
 
 }

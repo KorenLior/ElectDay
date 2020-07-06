@@ -1,22 +1,42 @@
 package Entity;
 
 public class Employee {
-	private int id;
-	private String name;
-	private int branch;
-	public Employee(int id, String name, int branch) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.branch = branch;
-	}
+	private int id, branchNum, phoneNum;
+	private String firstName, lastName;
+
 	public int getId() {
 		return id;
 	}
-	public String getName() {
-		return name;
+
+	public int getBranchNum() {
+		return branchNum;
 	}
-	public int getBranch() {
-		return branch;
+
+	public int getPhoneNum() {
+		return phoneNum;
 	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public Employee(int id, String firstName, String lastName, int phoneNum, int branchNum) {
+		super();
+		this.id = id;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.branchNum = branchNum;
+		this.phoneNum  = phoneNum;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", branchNum=" + branchNum + ", phoneNum=" + phoneNum + ", firstName=" + firstName
+				+ ", lastName=" + lastName + "]";
+	}
+	
 }

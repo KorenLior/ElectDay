@@ -1,5 +1,7 @@
 package Entity;
-
+/*
+ * @returns Branch List ArrayList<Branch>
+ */
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,9 +20,9 @@ public class DbGetBranchList {
 		 ArrayList<Branch> results = new ArrayList<Branch>();
 		 try {
 		 Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-		 try (Connection conn = DriverManager.getConnection(ConstsDbBranch.CONN_STR);
+		 try (Connection conn = DriverManager.getConnection(ConstsElectDayDB.CONN_STR);
 
-		 PreparedStatement stmt = conn.prepareStatement(ConstsDbBranch.SQL_SEL_BRANCHES);
+		 PreparedStatement stmt = conn.prepareStatement(ConstsElectDayDB.SQL_SEL_BRANCHES);
 
 		 ResultSet rs = stmt.executeQuery()) {
 
@@ -29,7 +31,7 @@ public class DbGetBranchList {
 		 Branch result = null;
 		 try
 		 {
-			 result = new Branch(rs.getInt(i++), rs.getInt(i++),rs.getInt(i++));
+			 result = new Branch(rs.getInt(i++), rs.getInt(i++));
 			 
 		 }
 		 catch (Exception e) {

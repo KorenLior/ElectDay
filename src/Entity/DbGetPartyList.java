@@ -1,5 +1,7 @@
 package Entity;
-
+/*
+ * @returns Party List ArrayList<Party>
+ */
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,16 +14,15 @@ public class DbGetPartyList {
 	public DbGetPartyList() {
 		// TODO Auto-generated constructor stub
 	}
-	ConstsDbParty dbConsts = new ConstsDbParty();
 	public static ArrayList<Party> getParties() {
 		 ArrayList<Party> results = new ArrayList<Party>();
 		 try {
 			 
 		 Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
 		 
-		 try (Connection conn = DriverManager.getConnection(ConstsDbParty.CONN_STR);
+		 try (Connection conn = DriverManager.getConnection(ConstsElectDayDB.CONN_STR);
 
-		 PreparedStatement stmt = conn.prepareStatement(ConstsDbParty.SQL_SEL_PARTY);
+		 PreparedStatement stmt = conn.prepareStatement(ConstsElectDayDB.SQL_SEL_PARTY);
 				
 		 ResultSet rs = stmt.executeQuery()) {
 			
