@@ -1,22 +1,27 @@
 package Entity;
 
 public class Party {
-	private String NoteLetters;
-	private String PartyName;
-	private String NotePicture;
+	private String noteLetters;
+	private String partyName;
+	private String notePicture;
+	
 	public Party(String noteLetters, String partyName, String notePicture) {
 		super();
-		NoteLetters = noteLetters;
-		PartyName = partyName;
-		NotePicture = notePicture;
+		this.noteLetters = noteLetters;
+		this.partyName = partyName;
+		this.notePicture = notePicture;
 	}
+
 	public String getNoteLetters() {
-		return NoteLetters;
+		return noteLetters;
 	}
+
 	public String getPartyName() {
-		return PartyName;
+		return partyName;
 	}
+
 	public String getNotePicture() {
-		return NotePicture;
+		return notePicture;
 	}
+	
 }

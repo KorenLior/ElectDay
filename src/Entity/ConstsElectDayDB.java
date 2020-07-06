@@ -9,6 +9,10 @@ public class ConstsElectDayDB {
 	public static final String SQL_SEL_BRANCHES = "SELECT * FROM tblBranch";
 	public static final String SQL_SEL_EMPLOYEES = "SELECT * FROM tblEmployee";
 	public static String SQL_SEL_EMPLOYEE_ID = "SELECT * FROM tblEmployee WHERE ID=";
+	public static final String SQL_SEL_BALLOTS = "SELECT * FROM tblBallot";
+	public static String SQL_SEL_BALLOTS_BALLOTNUM = "SELECT * FROM tblBallot WHERE BallotNum=";
+	public static final String SQL_INS_VOTE =  "{ call QRYNEWVOTE(?,?,?,?) }";
+	public static final String SQL_CLOSE_BALLOT =  "{ call QRY_CLOSE_BALLOT(?,?) }";
 	public ConstsElectDayDB() {
 	}
 	private static String getDBPath() {

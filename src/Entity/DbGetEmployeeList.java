@@ -82,7 +82,7 @@ public class DbGetEmployeeList {
 		 result = new Employee(id, firstName, lastName, phoneNum, branchNum);
 		 }
 		 catch (Exception e) {
-			System.out.println("DbGetElector.readFromDd Failure");
+			System.out.println("DbGetEmployee.readFromDd Failure");
 		}
 		 return result;
 }
