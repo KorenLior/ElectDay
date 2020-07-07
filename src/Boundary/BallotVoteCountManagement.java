@@ -37,11 +37,11 @@ public class BallotVoteCountManagement extends JFrame {
 	private JLayeredPane contentPane;
 	private JTextField tfBallot;
 	private JTextField tfEmployeeID;
-	private final Action saveVote = new SwingActionSave();
+
 	private final Action actionValid = new SwingActionValid();
 	private JButton btnLogin;
 	private JButton btnSaveVote;
-	private final Action Login = new SwingActionLogin();
+
 	private JLabel lblNewLabel_2;
 	private JComboBox<String> comboBoxPartyList;
 	private JCheckBox chckbxVoteValid;
@@ -49,7 +49,7 @@ public class BallotVoteCountManagement extends JFrame {
 	private JLabel lblEmployee;
 	private JLabel lblBallot;
 	private JButton btnCloseBallot;
-	private final Action closeBallot = new SwingActionCloseBallot();
+
 	private JMenuBar menuBar;
 	private JMenu mnMenu;
 	private JMenuItem mntmManageViewReports;
@@ -103,13 +103,29 @@ public class BallotVoteCountManagement extends JFrame {
 		btnSaveVote.setEnabled(false);
 		btnSaveVote.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if (voteLogCTRL.isLogged())
+				{
+					try {
+						if (chckbxVoteValid.isSelected())
+						{
+							voteLogCTRL.logVote("Yes", (String)comboBoxPartyList.getSelectedItem());
+						}
+						else
+						{
+							voteLogCTRL.logVote("No", (String)comboBoxPartyList.getSelectedItem());
+						}
+					}
+					catch (Exception logVote)
+					{
+						System.out.println("SAVE EXCEPTION: "+tfBallot.getText() +" " + tfEmployeeID.getText() +" "+
+								chckbxVoteValid.isSelected()+ " " + (String)comboBoxPartyList.getSelectedItem());
+					}
+				}
 			}
 		});
-		btnSaveVote.setAction(saveVote);
-		btnSaveVote.setText("Save Vote");
 		
 		
-		JButton btnCancel = new JButton("Cancel");
+		
 		
 		tfBallot = new JTextField();
 		tfBallot.setToolTipText("Ballot Number");
@@ -123,13 +139,25 @@ public class BallotVoteCountManagement extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("Ballot");
 		
-		btnLogin = new JButton("Login");
+		btnLogin = new JButton("Report Ballot Votes");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				try
+				{
+					voteLogCTRL.login( Integer.parseInt(tfEmployeeID.getText()), Integer.parseInt(tfBallot.getText()) );
+				}
+				catch (Exception loginFailExcetion)
+				{
+					voteLogCTRL = new VoteLogCTRL();
+				}
+				if (voteLogCTRL.isLogged())
+				{
+					lblEmployee.setText(voteLogCTRL.getEmployee());
+					lblBallot.setText(voteLogCTRL.getBallot());
+					btnSaveVote.setEnabled(true);
+				}
 			}
 		});
-		btnLogin.setAction(Login);
-		btnLogin.setText("Report Ballot Votes");
 		
 		lblNewLabel_2 = new JLabel("ENTER VALID EMPLOYEE ID AND BALLOT NUMBER TO REPORT VOTE COUNTING");
 		
@@ -149,8 +177,17 @@ public class BallotVoteCountManagement extends JFrame {
 		lblBallot = new JLabel("UNIDENTIFIED BALLOT");
 		
 		btnCloseBallot = new JButton("Close Ballot");
-		btnCloseBallot.setAction(closeBallot);
-		btnCloseBallot.setText("Close Ballot");
+		btnCloseBallot.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (voteLogCTRL.isLogged())
+				{
+					voteLogCTRL.closeBallot();
+					lblEmployee.setText(voteLogCTRL.getEmployee());
+					lblBallot.setText(voteLogCTRL.getBallot());
+					btnSaveVote.setEnabled(true);
+				}
+			}
+		});
 		
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
@@ -166,7 +203,6 @@ public class BallotVoteCountManagement extends JFrame {
 									.addComponent(comboBoxPartyList, GroupLayout.PREFERRED_SIZE, 241, GroupLayout.PREFERRED_SIZE)
 									.addGap(18)
 									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnCancel)
 										.addComponent(btnSaveVote)))
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(lblNewLabel)
@@ -213,40 +249,12 @@ public class BallotVoteCountManagement extends JFrame {
 						.addComponent(comboBoxPartyList, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnSaveVote))
 					.addGap(18)
-					.addComponent(btnCancel)
 					.addGap(114))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}
 	
 	
-	private class SwingActionSave extends AbstractAction {
-		public SwingActionSave() {
-			putValue(NAME, "saveVote");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-			
-			if (voteLogCTRL.isLogged())
-			{
-				try {
-					if (chckbxVoteValid.isSelected())
-					{
-						voteLogCTRL.logVote("Yes", (String)comboBoxPartyList.getSelectedItem());
-					}
-					else
-					{
-						voteLogCTRL.logVote("No", (String)comboBoxPartyList.getSelectedItem());
-					}
-				}
-				catch (Exception logVote)
-				{
-					System.out.println("SAVE EXCEPTION: "+tfBallot.getText() +" " + tfEmployeeID.getText() +" "+
-							chckbxVoteValid.isSelected()+ " " + (String)comboBoxPartyList.getSelectedItem());
-				}
-			}
-		}
-	}
 	
 	
 	private class SwingActionValid extends AbstractAction {
@@ -267,45 +275,10 @@ public class BallotVoteCountManagement extends JFrame {
 	}
 	
 	
-	private class SwingActionLogin extends AbstractAction {
-		public SwingActionLogin() {
-			putValue(NAME, "SwingActionLogin");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-			try
-			{
-				voteLogCTRL.login( Integer.parseInt(tfEmployeeID.getText()), Integer.parseInt(tfBallot.getText()) );
-			}
-			catch (Exception loginFailExcetion)
-			{
-				voteLogCTRL = new VoteLogCTRL();
-			}
-			if (voteLogCTRL.isLogged())
-			{
-				lblEmployee.setText(voteLogCTRL.getEmployee());
-				lblBallot.setText(voteLogCTRL.getBallot());
-				btnSaveVote.setEnabled(true);
-			}
-		}
-	}
+
 	
 	
-	private class SwingActionCloseBallot extends AbstractAction {
-		public SwingActionCloseBallot() {
-			putValue(NAME, "SwingActionCloseBallot");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-			if (voteLogCTRL.isLogged())
-			{
-				voteLogCTRL.closeBallot();
-				lblEmployee.setText(voteLogCTRL.getEmployee());
-				lblBallot.setText(voteLogCTRL.getBallot());
-				btnSaveVote.setEnabled(true);
-			}
-		}
-	}
+	
 	private class ViewReportsSwingAction extends AbstractAction {
 		public ViewReportsSwingAction() {
 			putValue(NAME, "View Reports");
