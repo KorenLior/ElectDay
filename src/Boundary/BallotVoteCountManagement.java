@@ -312,7 +312,10 @@ public class BallotVoteCountManagement extends JFrame {
 			putValue(SHORT_DESCRIPTION, "Manager Permission Required");
 		}
 		public void actionPerformed(ActionEvent e) {
-			
+			if (voteLogCTRL.isManager())
+			{
+				
+			}
 		}
 	}
 }

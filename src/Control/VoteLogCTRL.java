@@ -77,9 +77,16 @@ public class VoteLogCTRL {
 	public boolean isManager() {
 		DbGetBranchList dbGetBranchList = new DbGetBranchList();
 		ArrayList<Branch> branches = dbGetBranchList.getBranches();
+		if (!isLogged())
+		{
+			return false;
+		}
 		for(Branch branch:branches)
 		{
-			if(branch.getManagerId()==v)
+			if(branch.getManagerId()==employee.getId())
+			{
+				return true;
+			}
 		}
 		return false;
 	}
