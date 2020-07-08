@@ -112,7 +112,7 @@ public class BallotVoteCountManagement extends JFrame {
 						}
 						else
 						{
-							voteLogCTRL.logVote("No", (String)comboBoxPartyList.getSelectedItem());
+							voteLogCTRL.logVote("No", null);
 						}
 					}
 					catch (Exception logVote)
