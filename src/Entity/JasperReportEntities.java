@@ -85,4 +85,76 @@ public class JasperReportEntities {
 			return null;
 		}
 	}
+	public JFrame compileVotesBallot() {
+		{
+			try {
+				
+	            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+	            try (Connection conn = DriverManager.getConnection(ConstsElectDayDB.CONN_STR)) {
+	            	
+	            	JasperPrint print = JasperFillManager.fillReport(
+	            			getClass().getResourceAsStream("../Boundary/ManageVoteCount.jasper"),
+	                        new HashMap<String, Object>(), conn);
+	                JFrame frame = new JFrame("Vote Count by Ballot");
+	                frame.getContentPane().add(new JRViewer(print));
+	                frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+	                frame.pack();
+	                return frame;
+	            } catch (SQLException | JRException | NullPointerException e) {
+	                e.printStackTrace();
+	            }
+	        } catch (ClassNotFoundException e) {
+	            e.printStackTrace();
+	        }
+			return null;
+		}
+	}
+	public JFrame compileVotesCity() {
+		{
+			try {
+				
+	            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+	            try (Connection conn = DriverManager.getConnection(ConstsElectDayDB.CONN_STR)) {
+	            	
+	            	JasperPrint print = JasperFillManager.fillReport(
+	            			getClass().getResourceAsStream("../Boundary/ManageVoteCountByCity.jasper"),
+	                        new HashMap<String, Object>(), conn);
+	                JFrame frame = new JFrame("Vote Count by City");
+	                frame.getContentPane().add(new JRViewer(print));
+	                frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+	                frame.pack();
+	                return frame;
+	            } catch (SQLException | JRException | NullPointerException e) {
+	                e.printStackTrace();
+	            }
+	        } catch (ClassNotFoundException e) {
+	            e.printStackTrace();
+	        }
+			return null;
+		}
+	}
+	public JFrame compileVotesNational() {
+		{
+			try {
+				
+	            Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+	            try (Connection conn = DriverManager.getConnection(ConstsElectDayDB.CONN_STR)) {
+	            	
+	            	JasperPrint print = JasperFillManager.fillReport(
+	            			getClass().getResourceAsStream("../Boundary/ManageVoteCountTotal.jasper"),
+	                        new HashMap<String, Object>(), conn);
+	                JFrame frame = new JFrame("National Vote Count");
+	                frame.getContentPane().add(new JRViewer(print));
+	                frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+	                frame.pack();
+	                return frame;
+	            } catch (SQLException | JRException | NullPointerException e) {
+	                e.printStackTrace();
+	            }
+	        } catch (ClassNotFoundException e) {
+	            e.printStackTrace();
+	        }
+			return null;
+		}
+	}
 }

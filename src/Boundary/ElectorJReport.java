@@ -23,6 +23,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.HashMap;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JLabel;
 
 
 public class ElectorJReport extends JFrame {
@@ -57,7 +58,7 @@ public class ElectorJReport extends JFrame {
 		setContentPane(contentPane);
 		
 		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
+		contentPane.add(panel, BorderLayout.EAST);
 		
 		JButton btnElectorBallots = new JButton("Turnout by Ballot");
 		btnElectorBallots.addActionListener(new ActionListener() {
@@ -85,29 +86,79 @@ public class ElectorJReport extends JFrame {
 			}
 		});
 		
+		JLabel lblNewLabel = new JLabel("Elector Turnout");
+		
+		JLabel lblNewLabel_1 = new JLabel("Vote Count");
+		
+		JButton btnNewButton = new JButton("By Ballot");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JasperReportEntities jasperReportEntities = new JasperReportEntities();
+				jasperReportEntities.compileVotesBallot().setVisible(true);
+			}
+		});
+		
+		JButton btnNewButton_1 = new JButton("By City");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JasperReportEntities jasperReportEntities = new JasperReportEntities();
+				jasperReportEntities.compileVotesCity().setVisible(true);
+			}
+		});
+		
+		JButton btnNewButton_2 = new JButton("National");
+		btnNewButton_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JasperReportEntities jasperReportEntities = new JasperReportEntities();
+				jasperReportEntities.compileVotesNational().setVisible(true);
+			}
+		});
+		
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, gl_panel.createSequentialGroup()
+					.addContainerGap(197, Short.MAX_VALUE)
+					.addComponent(btnNewButton)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(btnNewButton_1)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnNewButton_2))
+						.addComponent(lblNewLabel_1))
+					.addGap(113))
 				.addGroup(gl_panel.createSequentialGroup()
-					.addContainerGap()
+					.addGap(133)
 					.addComponent(btnElectorBallots)
-					.addGap(18)
-					.addComponent(btnTurnoutCity)
-					.addGap(18)
-					.addComponent(btnTurnoutNational)
-					.addContainerGap(67, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(btnTurnoutCity)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnTurnoutNational)))
+					.addContainerGap(53, Short.MAX_VALUE))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(45)
+					.addGap(18)
+					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 21, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnTurnoutCity)
-						.addComponent(btnElectorBallots)
-						.addComponent(btnTurnoutNational))
-					.addContainerGap(183, Short.MAX_VALUE))
+						.addComponent(btnTurnoutNational)
+						.addComponent(btnElectorBallots))
+					.addPreferredGap(ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+					.addComponent(lblNewLabel_1)
+					.addGap(18)
+					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnNewButton_1)
+						.addComponent(btnNewButton_2)
+						.addComponent(btnNewButton))
+					.addGap(63))
 		);
 		panel.setLayout(gl_panel);
 	}
-	
 }

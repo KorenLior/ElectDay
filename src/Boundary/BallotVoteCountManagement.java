@@ -90,7 +90,6 @@ public class BallotVoteCountManagement extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				if (voteLogCTRL.isManager())
 				{
-					System.out.println("fghfghfgh");
 					ElectorJReport newFrame = new ElectorJReport();
 					newFrame.setVisible(true);
 					//set default close operation

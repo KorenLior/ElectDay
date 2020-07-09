@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.2.final using JasperReports Library version 6.12.2-75c5e90a222ab406e416cbf590a5397028a52de3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ManageVoteCount" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2f6e4db4-9f8f-4ffe-9759-6e1fd142f492">
+	<property name="template.type" value="columnar"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="ElectDayDbCon"/>
+	<style name="Title" forecolor="#000000" fontName="Times New Roman" fontSize="50" isBold="false"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Times New Roman" fontSize="18" isBold="false"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[SELECT tblBallot.CityName, tblVote.BallotNum, tblBallot.CountCloseTime, tblVote.IsValid, tblVote.VotedFor, Count(tblVote.VoteNum) AS CountOfVoteNum
+FROM tblBallot RIGHT JOIN tblVote ON tblBallot.BallotNum = tblVote.BallotNum
+GROUP BY tblBallot.CityName, tblVote.BallotNum, tblBallot.CountCloseTime, tblVote.IsValid, tblVote.VotedFor
+ORDER BY tblBallot.CityName, tblBallot.CountCloseTime, tblVote.IsValid, tblVote.VotedFor, Count(tblVote.VoteNum) DESC;]]>
+	</queryString>
+	<field name="CityName" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CityName"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tblBallot"/>
+	</field>
+	<field name="BallotNum" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="BallotNum"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tblVote"/>
+	</field>
+	<field name="CountCloseTime" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CountCloseTime"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tblBallot"/>
+	</field>
+	<field name="IsValid" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="IsValid"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tblVote"/>
+	</field>
+	<field name="VotedFor" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="VotedFor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="tblVote"/>
+	</field>
+	<field name="CountOfVoteNum" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="CountOfVoteNum"/>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{CityName}]]></groupExpression>
+		<groupHeader>
+			<band height="31">
+				<frame>
+					<reportElement mode="Opaque" x="0" y="7" width="555" height="24" forecolor="#B89F7D" backcolor="#9DB1B8" uuid="d8de62c1-c7b7-4da8-8c69-000abeaa2cc0"/>
+					<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+						<reportElement style="SubTitle" isPrintRepeatedValues="false" x="2" y="1" width="479" height="23" forecolor="#FFFFFF" uuid="25f707ae-9ac7-48d3-b45f-b14ee85fae9a"/>
+						<textElement>
+							<font isBold="false"/>
+						</textElement>
+						<textFieldExpression><![CDATA[$F{CityName}]]></textFieldExpression>
+					</textField>
+				</frame>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="7"/>
+		</groupFooter>
+	</group>
+	<group name="Group2">
+		<groupExpression><![CDATA[$F{BallotNum}]]></groupExpression>
+		<groupHeader>
+			<band height="24">
+				<textField isBlankWhenNull="true">
+					<reportElement positionType="Float" x="0" y="4" width="299" height="20" forecolor="#000000" uuid="4f894c7b-ac0a-463e-9e33-7d2560baa292"/>
+					<textElement>
+						<font fontName="Times New Roman" size="16" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{BallotNum}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+					<reportElement style="Detail" positionType="Float" x="390" y="3" width="149" height="18" uuid="c53a0b3a-6529-4d6d-861a-8176137224e4"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CountCloseTime}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement style="Column header" positionType="Float" x="250" y="2" width="132" height="20" forecolor="#000000" uuid="6e3c3a94-2d6c-48c8-9522-7e11a569b02e"/>
+					<textElement textAlignment="Right">
+						<font isBold="false"/>
+					</textElement>
+					<text><![CDATA[CountCloseTime]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="132" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="120" y="10" width="435" height="93" uuid="f49d68fd-a2c7-44ec-a5fc-9300d10c85a1"/>
+				<textElement>
+					<font size="55" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Vote Count Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="336" y="103" width="217" height="29" uuid="eef58983-008d-4a5b-8e47-97f8d4670c7a"/>
+				<textElement>
+					<font size="22" isBold="false"/>
+				</textElement>
+				<text><![CDATA[By Ballot]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="62" splitType="Stretch">
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="79" y="0" width="132" height="20" forecolor="#000000" uuid="2e43f314-2272-4d15-b7fc-277a125af26c"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Is Valid]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="215" y="1" width="338" height="18" uuid="24be88af-c351-479e-88b7-af658589e21b"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IsValid}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="80" y="19" width="132" height="20" forecolor="#000000" uuid="d10d125b-0e9a-47ab-b6e8-2b6e93dbdde8"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Voted For]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="215" y="20" width="338" height="18" uuid="99a77787-6a9b-4ee9-81d1-6ef001e17f8d"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VotedFor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" positionType="Float" x="80" y="40" width="132" height="20" forecolor="#000000" uuid="2ce9e077-845a-4cc6-9ef1-58f6cb463bf1"/>
+				<textElement textAlignment="Right">
+					<font isBold="false"/>
+				</textElement>
+				<text><![CDATA[Number Of Votes]]></text>
+			</staticText>
+			<textField textAdjust="StretchHeight" isBlankWhenNull="true">
+				<reportElement style="Detail" positionType="Float" x="219" y="41" width="338" height="18" uuid="50300b5b-4397-42f0-9dd2-fde44b90a7bd"/>
+				<textElement>
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CountOfVoteNum}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="4" y="57" width="551" height="1" uuid="c3412fbb-c4c6-496e-bfdc-7f26990691a7"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="fab082df-3ca0-43ac-900e-4da3f8b5a45d"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="13" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="2" y="0" width="555" height="13" forecolor="#D0B48E" backcolor="#9DB1B8" uuid="bfdca178-800d-445c-9a31-bb616a00e8ce"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="513" y="0" width="40" height="13" forecolor="#FFFFFF" uuid="2fba0f87-635e-476d-858f-d102b26146fe"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" mode="Transparent" x="433" y="0" width="80" height="13" forecolor="#FFFFFF" uuid="e454d23d-bcfc-4c79-a399-0ef520a3150a"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="2" y="0" width="197" height="13" forecolor="#FFFFFF" uuid="14d8de1e-8695-4078-a67f-0e69172574d5"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
