@@ -54,7 +54,6 @@ public class BallotVoteCountManagement extends JFrame {
 	private JMenu mnMenu;
 	private JMenuItem mntmManageViewReports;
 	private JMenuItem mntmExit;
-	private final Action ViewReports = new ViewReportsSwingAction();
 	/**
 	 * Launch the application.
 	 */
@@ -85,9 +84,26 @@ public class BallotVoteCountManagement extends JFrame {
 		menuBar.add(mnMenu);
 		
 		mntmManageViewReports = new JMenuItem("View Reports");
-		mntmManageViewReports.setAction(ViewReports);
+		mntmManageViewReports.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (voteLogCTRL.isManager())
+				{
+					System.out.println("fghfghfgh");
+					ElectorJReport newFrame = new ElectorJReport();
+					newFrame.setVisible(true);
+					//set default close operation
+					setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+				}
+				else
+				{
+					System.out.println("Login as Manager to view reports");
+				}
+			}
+		});
 		mntmManageViewReports.setText("View Reports");
-		
+		mntmManageViewReports.setEnabled(true);
 		mnMenu.add(mntmManageViewReports);
 		
 		mntmExit = new JMenuItem("New menu item");
@@ -277,18 +293,4 @@ public class BallotVoteCountManagement extends JFrame {
 	
 
 	
-	
-	
-	private class ViewReportsSwingAction extends AbstractAction {
-		public ViewReportsSwingAction() {
-			putValue(NAME, "View Reports");
-			putValue(SHORT_DESCRIPTION, "Manager Permission Required");
-		}
-		public void actionPerformed(ActionEvent e) {
-			if (voteLogCTRL.isManager())
-			{
-				
-			}
-		}
-	}
 }
