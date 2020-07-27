@@ -67,19 +67,14 @@ public class DbGetEmployeeList {
 	private Employee readFromDb(ResultSet rs) throws SQLException {
 		 int i = 1;
 		 int id;
-		 String firstName;
-		 String lastName;
-		 int phoneNum,branchNum;
+		 int branchNum;
 		 Employee result = null;
 		 try {
 
 
 		 id = rs.getInt(i++);
-		 firstName = rs.getString(i++);
-		 lastName = rs.getString(i++);
-		 phoneNum = rs.getInt(i++);
 		 branchNum = rs.getInt(i++);
-		 result = new Employee(id, firstName, lastName, phoneNum, branchNum);
+		 result = new Employee(id, branchNum);
 		 }
 		 catch (Exception e) {
 			System.out.println("DbGetEmployee.readFromDd Failure");

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import Entity.Ballot;
 import Entity.Branch;
-import Entity.DbGetBallotList;
+import Entity.DbBallot;
 import Entity.DbGetBranchList;
 import Entity.DbGetEmployeeList;
 import Entity.DbNewVoteEntry;
@@ -18,7 +18,7 @@ public class VoteLogCTRL {
 	public boolean login(int employeeId, int ballotNum)
 	{
 		DbGetEmployeeList dbGetEmployeeList = new DbGetEmployeeList();
-		DbGetBallotList dbGetBallotList = new DbGetBallotList();
+		DbBallot dbGetBallotList = new DbBallot();
 		Ballot ballot = dbGetBallotList.getBallot(ballotNum);
 		Employee employee = dbGetEmployeeList.getEmployee(employeeId);
 		if ((employee!=null)&&(ballot!=null))
@@ -44,7 +44,7 @@ public class VoteLogCTRL {
 		if (this.isLogged() && (!ballotCountClosed()))
 		{
 			ballot.setCountCloseTime(LocalTime.now().toString());
-			DbGetBallotList dbGetBallotList = new DbGetBallotList();
+			DbBallot dbGetBallotList = new DbBallot();
 			dbGetBallotList.closeBallot(ballot.getBallotNum(), ballot.getCountCloseTime());
 		}
 		login(employee.getId(),ballot.getBallotNum());

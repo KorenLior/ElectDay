@@ -13,6 +13,8 @@ public class ConstsElectDayDB {
 	public static String SQL_SEL_BALLOTS_BALLOTNUM = "SELECT * FROM tblBallot WHERE BallotNum=";
 	public static final String SQL_INS_VOTE =  "{ call QRYNEWVOTE(?,?,?,?) }";
 	public static final String SQL_CLOSE_BALLOT =  "{ call QRY_CLOSE_BALLOT(?,?) }";
+	public static String SQL_SEL_ELECTOR_BALLOT = "SELECT * FROM tblElector WHERE BallotNum=";
+	public static String SQL_SEL_ELECTOR_ID = "SELECT * FROM tblElector WHERE ID=";
 	public ConstsElectDayDB() {
 	}
 	private static String getDBPath() {

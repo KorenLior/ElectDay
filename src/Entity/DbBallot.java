@@ -10,9 +10,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DbGetBallotList {
+public class DbBallot {
 
-	public DbGetBallotList() {
+	public DbBallot() {
 		// TODO Auto-generated constructor stub
 	}
 
