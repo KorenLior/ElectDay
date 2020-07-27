@@ -78,6 +78,11 @@ public class ElectorTurnoutUpdateForm extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton btnVoted = new JButton("Elector Voted");
+				btnVoted.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent arg0) {
+						
+					}
+				});
 				btnVoted.setActionCommand("OK");
 				buttonPane.add(btnVoted);
 				getRootPane().setDefaultButton(btnVoted);

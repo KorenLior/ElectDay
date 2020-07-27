@@ -88,7 +88,30 @@ public class DbElectors {
 		return result;
 	}
 	
-	
+	public void turnout(int electorId) {
+		try {
+			 //System.out.println("here1" + ballotNum + votedFor+isValid+employeeId);
+			 Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+			 try (Connection conn = DriverManager.getConnection(ConstsElectDayDB.CONN_STR);
+					 
+				CallableStatement stmt = conn.prepareCall(ConstsElectDayDB.SQL_ELECTOR_VOTE)) {
+
+			
+		int i = 1;
+
+		stmt.setString(i++, closeTime);
+		stmt.setInt(i++, ballotNum);
+
+		 stmt.executeUpdate();
+		 } catch (SQLException e) {
+			 System.out.println("DbCloseBallot Failure2");
+		 e.printStackTrace();
+		 }
+		 } catch (ClassNotFoundException e) {
+			 System.out.println("DbCloseBallot ClassNotFound Failure2");
+		 e.printStackTrace();
+		 }
+	}
 	private Elector readFromDb(ResultSet rs) throws SQLException {
 			 int i = 1;
 			 int id;
