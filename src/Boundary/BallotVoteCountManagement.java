@@ -5,8 +5,11 @@ import java.awt.EventQueue;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import org.apache.log4j.BasicConfigurator;
 
 import Control.PartiesCTRL;
 import Control.VoteLogCTRL;
@@ -32,7 +35,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Button;
 
-public class BallotVoteCountManagement extends JFrame {
+public class BallotVoteCountManagement extends /*JFrame*/ JInternalFrame {
 
 	private JLayeredPane contentPane;
 	private JTextField tfBallot;
@@ -50,14 +53,12 @@ public class BallotVoteCountManagement extends JFrame {
 	private JLabel lblBallot;
 	private JButton btnCloseBallot;
 
-	private JMenuBar menuBar;
-	private JMenu mnMenu;
-	private JMenuItem mntmManageViewReports;
-	private JMenuItem mntmExit;
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -74,39 +75,15 @@ public class BallotVoteCountManagement extends JFrame {
 	 * Create the frame.
 	 */
 	public BallotVoteCountManagement() {
+		setResizable(true);
+		setMaximizable(true);
+		setIconifiable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 587, 394);
+		setBounds(100, 100, 515, 321);
 		
-		menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
 		
-		mnMenu = new JMenu("menu");
-		menuBar.add(mnMenu);
 		
-		mntmManageViewReports = new JMenuItem("View Reports");
-		mntmManageViewReports.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				if (voteLogCTRL.isManager())
-				{
-					ElectorJReport newFrame = new ElectorJReport();
-					newFrame.setVisible(true);
-					//set default close operation
-					setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-				}
-				else
-				{
-					System.out.println("Login as Manager to view reports");
-				}
-			}
-		});
-		mntmManageViewReports.setText("View Reports");
-		mntmManageViewReports.setEnabled(true);
-		mnMenu.add(mntmManageViewReports);
 		
-		mntmExit = new JMenuItem("New menu item");
-		mnMenu.add(mntmExit);
 		contentPane = new JLayeredPane();
 		contentPane.setToolTipText("EmployeeID");
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

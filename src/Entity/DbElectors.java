@@ -98,9 +98,9 @@ public class DbElectors {
 
 			
 		int i = 1;
-
-		stmt.setString(i++, closeTime);
-		stmt.setInt(i++, ballotNum);
+		Time now = new Time(System.currentTimeMillis());
+		stmt.setTime(i++, now);
+		stmt.setInt(i++, electorId);
 
 		 stmt.executeUpdate();
 		 } catch (SQLException e) {

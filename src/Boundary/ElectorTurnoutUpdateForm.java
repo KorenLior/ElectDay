@@ -50,16 +50,15 @@ public class ElectorTurnoutUpdateForm extends JDialog {
 		JLabel lblElector = new JLabel("Elector Not Loaded");
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
-			gl_contentPanel.createParallelGroup(Alignment.LEADING)
+			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPanel.createSequentialGroup()
 					.addComponent(txtElectorId, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnLoad)
-					.addContainerGap(243, Short.MAX_VALUE))
-				.addGroup(Alignment.TRAILING, gl_contentPanel.createSequentialGroup()
-					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addComponent(lblElector, GroupLayout.PREFERRED_SIZE, 408, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap())
+					.addContainerGap(163, Short.MAX_VALUE))
+				.addGroup(gl_contentPanel.createSequentialGroup()
+					.addComponent(lblElector, GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+					.addGap(1))
 		);
 		gl_contentPanel.setVerticalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.LEADING)
@@ -69,7 +68,7 @@ public class ElectorTurnoutUpdateForm extends JDialog {
 						.addComponent(btnLoad))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblElector, GroupLayout.PREFERRED_SIZE, 40, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(149, Short.MAX_VALUE))
+					.addContainerGap(36, Short.MAX_VALUE))
 		);
 		contentPanel.setLayout(gl_contentPanel);
 		{
