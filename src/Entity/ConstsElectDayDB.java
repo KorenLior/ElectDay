@@ -16,6 +16,7 @@ public class ConstsElectDayDB {
 	public static String SQL_SEL_ELECTOR_BALLOT = "SELECT * FROM tblElector WHERE BallotNum=";
 	public static String SQL_SEL_ELECTOR_ID = "SELECT * FROM tblElector WHERE ID=";
 	public static String SQL_ELECTOR_VOTE = "{ call QRY_ELECTOR_VOTE(?,?) }";
+	public static String SQL_RIDERS_TABLE = "{ QryRiders }";
 	public ConstsElectDayDB() {
 	}
 	private static String getDBPath() {

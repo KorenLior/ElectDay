@@ -9,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Vector;
+
 
 public class DbElectors {
 
@@ -199,5 +201,52 @@ public class DbElectors {
 			 System.out.println("DbUpdateRide ClassNotFound Failure2");
 		 e.printStackTrace();
 		 }
+	}
+	public Vector<Vector<Object>> getRidersTable(){
+		Vector<Vector<Object>> results = new Vector<Vector<Object>>();
+		try {
+			 Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+			 try (Connection conn = DriverManager.getConnection(ConstsDbManageElect.CONN_STR);
+			 PreparedStatement stmt = conn.prepareStatement(ConstsElectDayDB.SQL_RIDERS_TABLE);
+			 ResultSet rs = stmt.executeQuery()) {
+
+			 while (rs.next()) {
+				 int i = 1;
+				 Vector<Object> result = new Vector<Object>();
+				 try
+				 {
+					 
+					 int elector = rs.getInt(i++); result.add(elector);
+					 String name = rs.getString(i++)+" "+rs.getString(i++); result.add(name);
+					 String phone = rs.getString(i++); result.add(phone);
+					 String electorAddress = rs.getString(i++); result.add(electorAddress);
+					 String ballotAddress = rs.getString(i++); result.add(ballotAddress);
+					 int ballot = rs.getInt(i++); result.add(ballot);
+					 String assignedTime = rs.getString(i++); result.add(assignedTime.toString());
+					 int assignedID = rs.getInt(i++); result.add(assignedID);
+					 String assignedName = rs.getString(i++)+" "+rs.getString(i++); result.add(assignedName);
+					 int driverId = rs.getInt(i++); result.add(driverId);
+					 Time pickupT = rs.getTime(i++); result.add(pickupT.toString());
+					 Time returnT = rs.getTime(i++); result.add(returnT.toString());
+				 }
+				 catch (Exception e) {
+					// TODO: handle exception
+					 System.out.println("ElectionDayPosition readDb Failure");
+				 }
+				 results.add(result);
+			 }
+			 } catch (SQLException e) {
+				 System.out.println("getElectionDayPosition() readFromDb Failure");
+			 e.printStackTrace();
+			 }
+			} catch (ClassNotFoundException e) {
+			 e.printStackTrace();
+			}
+
+		return results;
+	}
+	public void setRide(int elector, int id, String pickUp, String returnTime) {
+		// TODO Auto-generated method stub
+		
 	}
 }
