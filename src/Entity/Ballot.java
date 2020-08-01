@@ -5,12 +5,17 @@ public class Ballot {
 	private String cityName;
 	private String countCloseTime;
 	private int branchNum;
-	public Ballot(int ballotNum, String cityName, int branchNum, String countCloseTime) {
+	private String ballotAddress;
+	public Ballot(int ballotNum,String ballotAddress, String cityName, int branchNum, String countCloseTime) {
 		super();
 		this.ballotNum = ballotNum;
 		this.cityName = cityName;
 		this.countCloseTime = countCloseTime;
 		this.branchNum = branchNum;
+		this.ballotAddress = ballotAddress;
+	}
+	public String getBallotAddress() {
+		return ballotAddress;
 	}
 	public int getBallotNum() {
 		return ballotNum;

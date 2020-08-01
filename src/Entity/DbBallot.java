@@ -99,13 +99,15 @@ public class DbBallot {
 		 String city;
 		 int branchNum;
 		 String countCloseTime;
+		 String ballotAddress;
 		 Ballot result = null;
 		 try {
 			 ballotNum = rs.getInt(i++);
+			 ballotAddress = rs.getString(i++);
 			 city = rs.getString(i++);
 			 branchNum = rs.getInt(i++);
 			 countCloseTime = rs.getString(i++);
-			 result = new Ballot(ballotNum, city, branchNum, countCloseTime);
+			 result = new Ballot(ballotNum, ballotAddress, city, branchNum, countCloseTime);
 		 }
 		 catch (Exception e) {
 			System.out.println("DbGetBallot.readFromDd Failure");

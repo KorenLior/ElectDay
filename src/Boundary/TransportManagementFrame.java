@@ -180,7 +180,7 @@ public class TransportManagementFrame extends JFrame {
 			}
 		});
 		submitButton.setForeground(Color.DARK_GRAY);
-		submitButton.setBackground(Color.DARK_GRAY);
+		submitButton.setBackground(Color.LIGHT_GRAY);
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)

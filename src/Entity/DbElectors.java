@@ -171,24 +171,38 @@ public class DbElectors {
 				 try
 				 {
 					 int elector = rs.getInt(i++); 
+					
 					 String name = rs.getString(i++)+" "+rs.getString(i++);
+					
 					 String phone = rs.getString(i++); 
-					 String electorAddress = rs.getString(i++); 
-					 String ballotAddress = rs.getString(i++); 
-					 int ballot = rs.getInt(i++); result.add(ballot);
+					
+					 String electorAddress = rs.getString(i++);
+					
+					 String ballotAddress = rs.getString(i++);
+				
+					 int ballot = rs.getInt(i++);
+					
 					 String assignedTime = rs.getString(i++); 
+			
 					 int assignedID = rs.getInt(i++); 
-					 String assignedName = rs.getString(i++)+" "+rs.getString(i++); 
-					 int driverId = rs.getInt(i++); 
-					 Time pickupT = rs.getTime(i++); 
-					 Time returnT = rs.getTime(i++); 
 					 
+					 String assignedName = rs.getString(i++)+" "+rs.getString(i++); 
+					
+					 
+					 int driverId = rs.getInt(i++);
+			
+					 String pickupT = rs.getString(i++); 
+				
+					 String returnT = rs.getString(i++); 
+
+					
 					 result.add(elector);
 					 result.add(name);
 					 result.add(phone);
 					 result.add(electorAddress);
 					 result.add(ballotAddress);
-					 result.add(assignedTime.toString());
+					 result.add(ballot);
+					 result.add(assignedTime);
 					 result.add(assignedID);
 					 result.add(assignedName);
 					 result.add(driverId);
@@ -198,12 +212,12 @@ public class DbElectors {
 				 }
 				 catch (Exception e) {
 					// TODO: handle exception
-					 System.out.println("ElectionDayPosition readDb Failure");
+					 System.out.println("Riders readDb Failure");
 				 }
 				 
 			 }
 			 } catch (SQLException e) {
-				 System.out.println("getElectionDayPosition() readFromDb Failure");
+				 System.out.println("Riders readFromDb Failure");
 			 e.printStackTrace();
 			 }
 			} catch (ClassNotFoundException e) {
