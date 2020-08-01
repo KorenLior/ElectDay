@@ -2,7 +2,7 @@ package Entity;
 
 
 public class Branch {
-	private int branchNum, managerId, transportRepId;
+	private int branchNum, managerId;
 	public Branch(int branchNum, int managerId) {
 		this.branchNum = branchNum;
 		this.managerId = managerId;

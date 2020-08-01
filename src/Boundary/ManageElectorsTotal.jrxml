@@ -56,7 +56,7 @@ FROM `PUBLIC`.`QRY_ELECTORS_VOTED_NATIONAL`,
 		<band splitType="Stretch"/>
 	</columnHeader>
 	<detail>
-		<band height="91" splitType="Stretch">
+		<band height="95" splitType="Stretch">
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="2" y="90" width="551" height="1" uuid="5e41185f-9c90-45ca-839b-e28b308c1430"/>
 			</line>
@@ -79,6 +79,16 @@ FROM `PUBLIC`.`QRY_ELECTORS_VOTED_NATIONAL`,
 				<reportElement x="335" y="60" width="100" height="30" uuid="43cbe7cb-ea1f-4c8b-aeae-c68e901b1db6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{CountOfID}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement style="Column header" x="435" y="0" width="100" height="60" uuid="746710ba-285c-44e3-8587-aa9f064bb3e2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[Percentage Turnout]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="435" y="60" width="100" height="30" uuid="41133c2d-f832-4ddf-9b75-82d00348d07c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[100*$F{CountOfID}/$F{COLUMN_2}+"%"]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

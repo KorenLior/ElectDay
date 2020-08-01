@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import Entity.Ballot;
 import Entity.Branch;
 import Entity.DbBallot;
-import Entity.DbGetBranchList;
-import Entity.DbGetEmployeeList;
+import Entity.DbBranches;
+import Entity.DbEmployee;
 import Entity.DbNewVoteEntry;
 import Entity.Employee;
 
@@ -17,7 +17,7 @@ public class VoteLogCTRL {
 	
 	public boolean login(int employeeId, int ballotNum)
 	{
-		DbGetEmployeeList dbGetEmployeeList = new DbGetEmployeeList();
+		DbEmployee dbGetEmployeeList = new DbEmployee();
 		DbBallot dbGetBallotList = new DbBallot();
 		Ballot ballot = dbGetBallotList.getBallot(ballotNum);
 		Employee employee = dbGetEmployeeList.getEmployee(employeeId);
@@ -74,20 +74,5 @@ public class VoteLogCTRL {
 		}
 		return false;
 	}
-	public boolean isManager() {
-		DbGetBranchList dbGetBranchList = new DbGetBranchList();
-		ArrayList<Branch> branches = dbGetBranchList.getBranches();
-		if (!isLogged())
-		{
-			return false;
-		}
-		for(Branch branch:branches)
-		{
-			if(branch.getManagerId()==employee.getId())
-			{
-				return true;
-			}
-		}
-		return false;
-	}
+	
 }

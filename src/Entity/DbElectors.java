@@ -21,8 +21,8 @@ public class DbElectors {
 		 ArrayList<Elector> results = new ArrayList<Elector>();
 		 try {
 		 Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-		 try (Connection conn = DriverManager.getConnection(ConstsDbManageElect.CONN_STR);
-		 PreparedStatement stmt = conn.prepareStatement(ConstsDbManageElect.SQL_SEL_ELECTOR);
+		 try (Connection conn = DriverManager.getConnection(ConstsElectDayDB.CONN_STR);
+		 PreparedStatement stmt = conn.prepareStatement(ConstsElectDayDB.SQL_SEL_ELECTORS);
 		 ResultSet rs = stmt.executeQuery()) {
 			 while (rs.next()) {
 				 Elector res = readFromDb(rs);
@@ -43,9 +43,9 @@ public class DbElectors {
 		ArrayList<Elector> results = new ArrayList<Elector>();
 		 try {
 		 Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-		 try (Connection conn = DriverManager.getConnection(ConstsDbManageElect.CONN_STR);
+		 try (Connection conn = DriverManager.getConnection(ConstsElectDayDB.CONN_STR);
 
-		 PreparedStatement stmt = conn.prepareStatement(ConstsDbManageElect.SQL_SEL_ELECTOR_BALLOT
+		 PreparedStatement stmt = conn.prepareStatement(ConstsElectDayDB.SQL_SEL_ELECTOR_BALLOT
 				 + String.valueOf(ballotNum));
 
 		 ResultSet rs = stmt.executeQuery()) {
@@ -71,9 +71,9 @@ public class DbElectors {
 		 Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
 		 //System.out.println(ConstsDbElector.SQL_SEL_ELECTOR_ID
 		 //+ electorId);
-		 try (Connection conn = DriverManager.getConnection(ConstsDbManageElect.CONN_STR);
+		 try (Connection conn = DriverManager.getConnection(ConstsElectDayDB.CONN_STR);
 				 
-		 PreparedStatement stmt = conn.prepareStatement(ConstsDbManageElect.SQL_SEL_ELECTOR_ID
+		 PreparedStatement stmt = conn.prepareStatement(ConstsElectDayDB.SQL_SEL_ELECTOR_ID
 				 + electorId);
 
 		 ResultSet rs = stmt.executeQuery()) {
@@ -114,6 +114,7 @@ public class DbElectors {
 		 e.printStackTrace();
 		 }
 	}
+	
 	private Elector readFromDb(ResultSet rs) throws SQLException {
 			 int i = 1;
 			 int id;
@@ -141,9 +142,13 @@ public class DbElectors {
 			 gender = rs.getString(i++);
 			 voteTime = rs.getTime(i++);
 			 birthDate = rs.getDate(i++);
+			 int assDriverId = rs.getInt(i++);
+			 String assRideTime = rs.getString(i++);
+			 String preferenceParty = rs.getString(i++);
+			 
 			 
 			 result = new Elector(id, ballotNum, serialNum, firstName, 
-						lastName, address, phoneNum, status, gender, voteTime, birthDate);
+						lastName, address, phoneNum, status, gender, voteTime, birthDate, assDriverId, assRideTime, preferenceParty);
 			 }
 			 catch (Exception e) {
 				System.out.println("DbGetElector.readFromDd Failure");
@@ -152,61 +157,11 @@ public class DbElectors {
 	}
 	
 	
-	public void updatePhone(int electorId, int phoneNum)
-	{
-		try {
-			 //System.out.println("here1" + ballotNum + votedFor+isValid+employeeId);
-			 Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-			 try (Connection conn = DriverManager.getConnection(ConstsDbManageElect.CONN_STR);
-					 
-				CallableStatement stmt = conn.prepareCall(ConstsDbManageElect.SQL_UPDATE_ELECTOR_PHONE)) {
-
-			
-		int i = 1;
-
-		stmt.setInt(i++, phoneNum);
-		stmt.setInt(i++, electorId);
-
-		 stmt.executeUpdate();
-		 } catch (SQLException e) {
-			 System.out.println("DbCloseBallot Failure2");
-		 e.printStackTrace();
-		 }
-		 } catch (ClassNotFoundException e) {
-			 System.out.println("DbCloseBallot ClassNotFound Failure2");
-		 e.printStackTrace();
-		 }
-	}
-	public void updateRide(int electorId, int rideId ,String rideTime)
-	{
-		try {
-			 //System.out.println("here1" + ballotNum + votedFor+isValid+employeeId);
-			 Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-			 try (Connection conn = DriverManager.getConnection(ConstsDbManageElect.CONN_STR);
-					 
-				CallableStatement stmt = conn.prepareCall(ConstsDbManageElect.SQL_UPDATE_ELECTOR_RIDE)) {
-
-			
-		int i = 1;
-		stmt.setInt(i++, rideId);
-		stmt.setString(i++, rideTime);
-		stmt.setInt(i++, electorId);
-
-		 stmt.executeUpdate();
-		 } catch (SQLException e) {
-			 System.out.println("DbUpdateRide Failure2");
-		 e.printStackTrace();
-		 }
-		 } catch (ClassNotFoundException e) {
-			 System.out.println("DbUpdateRide ClassNotFound Failure2");
-		 e.printStackTrace();
-		 }
-	}
 	public Vector<Vector<Object>> getRidersTable(){
 		Vector<Vector<Object>> results = new Vector<Vector<Object>>();
 		try {
 			 Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-			 try (Connection conn = DriverManager.getConnection(ConstsDbManageElect.CONN_STR);
+			 try (Connection conn = DriverManager.getConnection(ConstsElectDayDB.CONN_STR);
 			 PreparedStatement stmt = conn.prepareStatement(ConstsElectDayDB.SQL_RIDERS_TABLE);
 			 ResultSet rs = stmt.executeQuery()) {
 
@@ -215,25 +170,37 @@ public class DbElectors {
 				 Vector<Object> result = new Vector<Object>();
 				 try
 				 {
-					 
-					 int elector = rs.getInt(i++); result.add(elector);
-					 String name = rs.getString(i++)+" "+rs.getString(i++); result.add(name);
-					 String phone = rs.getString(i++); result.add(phone);
-					 String electorAddress = rs.getString(i++); result.add(electorAddress);
-					 String ballotAddress = rs.getString(i++); result.add(ballotAddress);
+					 int elector = rs.getInt(i++); 
+					 String name = rs.getString(i++)+" "+rs.getString(i++);
+					 String phone = rs.getString(i++); 
+					 String electorAddress = rs.getString(i++); 
+					 String ballotAddress = rs.getString(i++); 
 					 int ballot = rs.getInt(i++); result.add(ballot);
-					 String assignedTime = rs.getString(i++); result.add(assignedTime.toString());
-					 int assignedID = rs.getInt(i++); result.add(assignedID);
-					 String assignedName = rs.getString(i++)+" "+rs.getString(i++); result.add(assignedName);
-					 int driverId = rs.getInt(i++); result.add(driverId);
-					 Time pickupT = rs.getTime(i++); result.add(pickupT.toString());
-					 Time returnT = rs.getTime(i++); result.add(returnT.toString());
+					 String assignedTime = rs.getString(i++); 
+					 int assignedID = rs.getInt(i++); 
+					 String assignedName = rs.getString(i++)+" "+rs.getString(i++); 
+					 int driverId = rs.getInt(i++); 
+					 Time pickupT = rs.getTime(i++); 
+					 Time returnT = rs.getTime(i++); 
+					 
+					 result.add(elector);
+					 result.add(name);
+					 result.add(phone);
+					 result.add(electorAddress);
+					 result.add(ballotAddress);
+					 result.add(assignedTime.toString());
+					 result.add(assignedID);
+					 result.add(assignedName);
+					 result.add(driverId);
+					 result.add(pickupT);
+					 result.add(returnT);
+					 results.add(result);
 				 }
 				 catch (Exception e) {
 					// TODO: handle exception
 					 System.out.println("ElectionDayPosition readDb Failure");
 				 }
-				 results.add(result);
+				 
 			 }
 			 } catch (SQLException e) {
 				 System.out.println("getElectionDayPosition() readFromDb Failure");
@@ -242,11 +209,28 @@ public class DbElectors {
 			} catch (ClassNotFoundException e) {
 			 e.printStackTrace();
 			}
-
+		
 		return results;
 	}
-	public void setRide(int elector, int id, String pickUp, String returnTime) {
-		// TODO Auto-generated method stub
-		
+	public void setRide(int elector, int employee, String pickUp, String returnTime) {
+		try {
+			 Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+			 try (Connection conn = DriverManager.getConnection(ConstsElectDayDB.CONN_STR);
+					 
+				CallableStatement stmt = conn.prepareCall(ConstsElectDayDB.SQL_INS_RIDE)) {
+		int i = 1;
+		stmt.setInt(i++, elector);
+		stmt.setInt(i++, employee);
+		stmt.setString(i++, pickUp);
+		stmt.setString(i++, returnTime);
+		 stmt.executeUpdate();
+		 } catch (SQLException e) {
+			 System.out.println("DbNewRide Failure2");
+		 e.printStackTrace();
+		 }
+		 } catch (ClassNotFoundException e) {
+			 System.out.println("DbNewRide ClassNotFound Failure2");
+		 e.printStackTrace();
+		 }
 	}
 }

@@ -2,14 +2,14 @@ package Control;
 
 import java.util.ArrayList;
 
-import Entity.DbGetPartyList;
+import Entity.DbParties;
 import Entity.Party;
 
 public class PartiesCTRL {
 
 	public ArrayList<String> getParties(){
 		ArrayList<String> results = new ArrayList<String>();
-		DbGetPartyList dbGetPartyList = new DbGetPartyList();
+		DbParties dbGetPartyList = new DbParties();
 		ArrayList<Party> parties = dbGetPartyList.getParties();
 		for (Party party : parties)
 		{

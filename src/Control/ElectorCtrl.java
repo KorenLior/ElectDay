@@ -3,6 +3,7 @@ package Control;
 import java.util.Vector;
 
 import Entity.DbElectors;
+import Entity.Elector;
 
 public class ElectorCtrl {
 	public void electorTurnout(int electorId) {
@@ -10,11 +11,16 @@ public class ElectorCtrl {
 	}
 
 	public Vector<Vector<Object>> getRiders() {
-		Vector<Vector<Object>> result = (new DbElectors()).getRidersTable();
-		return result;
+		Vector<Vector<Object>> results = (new DbElectors()).getRidersTable();
+		return results;
 	}
 
-	public static void setRide(int elector, int id, String pickUp, String returnTime) {
+	public void setRide(int elector, int id, String pickUp, String returnTime) {
 		(new DbElectors()).setRide(elector, id, pickUp, returnTime);
+	}
+
+	public Elector getElector(int electorId) {
+		Elector result = (new DbElectors()).getElector(electorId);
+		return result;
 	}
 }

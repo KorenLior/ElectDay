@@ -70,7 +70,6 @@ public class DbBallot {
 	public void closeBallot(int ballotNum, String closeTime)
 	{
 		try {
-			 //System.out.println("here1" + ballotNum + votedFor+isValid+employeeId);
 			 Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
 			 try (Connection conn = DriverManager.getConnection(ConstsElectDayDB.CONN_STR);
 					 

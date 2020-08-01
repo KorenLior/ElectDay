@@ -46,8 +46,26 @@ public class ElectorTurnoutUpdateForm extends JDialog {
 		txtElectorId = new JTextField();
 		txtElectorId.setText("Elector ID");
 		txtElectorId.setColumns(10);
-		JButton btnLoad = new JButton("Load Elector");
 		JLabel lblElector = new JLabel("Elector Not Loaded");
+		
+		
+		
+		
+		JButton btnLoad = new JButton("Load Elector");
+		btnLoad.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String loaded  = null;
+				loaded = appEngine.getElector(Integer.parseInt(txtElectorId.getText()));
+				if (loaded!=null) {
+					lblElector.setText(loaded);
+					electorId = Integer.parseInt(txtElectorId.getText());
+				}
+				else {
+					electorId = -1;
+				}
+			}
+		});
+		
 		GroupLayout gl_contentPanel = new GroupLayout(contentPanel);
 		gl_contentPanel.setHorizontalGroup(
 			gl_contentPanel.createParallelGroup(Alignment.TRAILING)
@@ -79,7 +97,11 @@ public class ElectorTurnoutUpdateForm extends JDialog {
 				JButton btnVoted = new JButton("Elector Voted");
 				btnVoted.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
-						
+						if (electorId!=-1) {
+							appEngine.setElectorTurnoutTime(electorId);
+							electorId = -1;
+							closeGui();
+						}
 					}
 				});
 				btnVoted.setActionCommand("OK");

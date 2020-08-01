@@ -8,6 +8,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Control.PartiesCTRL;
 import Entity.JasperReportEntities;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -25,12 +26,23 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 
-public class ElectorJReport extends JInternalFrame {
+public class ElectorJReport extends JFrame {
 
 	private JPanel contentPane;
 
+	private JMenuBar menuBar;
+	private JMenu mnManage;
+	private JMenuItem mntmElectorBook;
+	private JMenuItem mntmManageSystem;
+	private JMenuItem mntmLogRide;
+	private JMenuItem mntmReportCount;
+	private JMenuItem mntmViewReports;
 	/**
 	 * Launch the application.
 	 */
@@ -53,6 +65,65 @@ public class ElectorJReport extends JInternalFrame {
 	public ElectorJReport() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
+		
+		menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		mnManage = new JMenu("menu");
+		menuBar.add(mnManage);
+		
+		mntmElectorBook = new JMenuItem("Elector Book");
+		mntmElectorBook.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				appEngine.electorBook();
+			}
+		});
+		mnManage.add(mntmElectorBook);
+		
+		mntmLogRide = new JMenuItem("Log Rides");
+		mntmLogRide.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				appEngine.logRides();
+			}
+		});
+		mnManage.add(mntmLogRide);
+		
+		mntmReportCount = new JMenuItem("Count Votes");
+		mntmReportCount.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				appEngine.countVotes();
+			}
+		});
+		mnManage.add(mntmReportCount);
+		
+		mntmViewReports = new JMenuItem("View Reports");
+		mntmViewReports.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				appEngine.electorReports();
+			}
+		});
+		mnManage.add(mntmViewReports);
+		
+		mntmManageSystem = new JMenuItem("System Management");
+		mntmManageSystem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				appEngine.systemManage();
+			}
+		});
+		mnManage.add(mntmManageSystem);
+		
+		
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));

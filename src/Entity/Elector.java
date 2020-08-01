@@ -11,8 +11,11 @@ public class Elector {
 	private String phoneNumber;
 	private String status, gender;
 	private Date birthDate;
+	int assDriverId;
+	String assRideTime;
+	String preferenceParty;
 	public Elector(int id, int ballotNum, int serialNum, String firstName, 
-			String lastName, String address, String phoneNumber, String status, String gender, Time votingTime, Date birthDate) {
+			String lastName, String address, String phoneNumber, String status, String gender, Time votingTime, Date birthDate, int assDriverId, String assRideTime, String preferenceParty) {
 		super();
 		this.id = id;
 		this.ballotNum = ballotNum;
@@ -25,8 +28,26 @@ public class Elector {
 		this.gender = gender;
 		this.birthDate = birthDate;
 		this.voteTime = votingTime;
+		this.assDriverId = assDriverId;
+		this.assRideTime = assRideTime;
+		this.preferenceParty = preferenceParty;
 	}
 	
+
+	public int getAssDriverId() {
+		return assDriverId;
+	}
+
+
+	public String getAssRideTime() {
+		return assRideTime;
+	}
+
+
+	public String getPreferenceParty() {
+		return preferenceParty;
+	}
+
 
 	public String getPhoneNumber() {
 		return phoneNumber;

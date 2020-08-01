@@ -35,23 +35,26 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.Button;
 
-public class BallotVoteCountManagement extends /*JFrame*/ JInternalFrame {
+public class BallotVoteCountManagement extends JFrame{
 
 	private JLayeredPane contentPane;
 	private JTextField tfBallot;
-	private JTextField tfEmployeeID;
 
 	private final Action actionValid = new SwingActionValid();
 	private JButton btnLogin;
 	private JButton btnSaveVote;
-
-	private JLabel lblNewLabel_2;
 	private JComboBox<String> comboBoxPartyList;
 	private JCheckBox chckbxVoteValid;
 	private VoteLogCTRL voteLogCTRL = new VoteLogCTRL();
-	private JLabel lblEmployee;
 	private JLabel lblBallot;
 	private JButton btnCloseBallot;
+	private JMenuBar menuBar;
+	private JMenu mnManage;
+	private JMenuItem mntmElectorBook;
+	private JMenuItem mntmManageSystem;
+	private JMenuItem mntmLogRide;
+	private JMenuItem mntmReportCount;
+	private JMenuItem mntmViewReports;
 
 	
 	/**
@@ -75,11 +78,58 @@ public class BallotVoteCountManagement extends /*JFrame*/ JInternalFrame {
 	 * Create the frame.
 	 */
 	public BallotVoteCountManagement() {
-		setResizable(true);
-		setMaximizable(true);
-		setIconifiable(true);
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 515, 321);
+		
+		menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		mnManage = new JMenu("menu");
+		menuBar.add(mnManage);
+		
+		mntmElectorBook = new JMenuItem("Elector Book");
+		mntmElectorBook.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				appEngine.electorBook();
+			}
+		});
+		mnManage.add(mntmElectorBook);
+		
+		mntmLogRide = new JMenuItem("Log Rides");
+		mntmLogRide.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				appEngine.logRides();
+			}
+		});
+		mnManage.add(mntmLogRide);
+		
+		mntmReportCount = new JMenuItem("Count Votes");
+		mnManage.add(mntmReportCount);
+		
+		mntmViewReports = new JMenuItem("View Reports");
+		mntmViewReports.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				appEngine.electorReports();
+			}
+		});
+		mnManage.add(mntmViewReports);
+		
+		mntmManageSystem = new JMenuItem("System Management");
+		mntmManageSystem.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				appEngine.systemManage();
+			}
+		});
+		mnManage.add(mntmManageSystem);
 		
 		
 		
@@ -109,7 +159,7 @@ public class BallotVoteCountManagement extends /*JFrame*/ JInternalFrame {
 					}
 					catch (Exception logVote)
 					{
-						System.out.println("SAVE EXCEPTION: "+tfBallot.getText() +" " + tfEmployeeID.getText() +" "+
+						System.out.println("SAVE EXCEPTION: "+tfBallot.getText() +" "+
 								chckbxVoteValid.isSelected()+ " " + (String)comboBoxPartyList.getSelectedItem());
 					}
 				}
@@ -123,12 +173,6 @@ public class BallotVoteCountManagement extends /*JFrame*/ JInternalFrame {
 		tfBallot.setToolTipText("Ballot Number");
 		tfBallot.setColumns(10);
 		
-		tfEmployeeID = new JTextField();
-		tfEmployeeID.setToolTipText("EmployeeID");
-		tfEmployeeID.setColumns(10);
-		
-		JLabel lblNewLabel = new JLabel("EmployeeID");
-		
 		JLabel lblNewLabel_1 = new JLabel("Ballot");
 		
 		btnLogin = new JButton("Report Ballot Votes");
@@ -136,7 +180,7 @@ public class BallotVoteCountManagement extends /*JFrame*/ JInternalFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				try
 				{
-					voteLogCTRL.login( Integer.parseInt(tfEmployeeID.getText()), Integer.parseInt(tfBallot.getText()) );
+					voteLogCTRL.login( appEngine.getEmployeeId(), Integer.parseInt(tfBallot.getText()) );
 				}
 				catch (Exception loginFailExcetion)
 				{
@@ -144,14 +188,12 @@ public class BallotVoteCountManagement extends /*JFrame*/ JInternalFrame {
 				}
 				if (voteLogCTRL.isLogged())
 				{
-					lblEmployee.setText(voteLogCTRL.getEmployee());
 					lblBallot.setText(voteLogCTRL.getBallot());
 					btnSaveVote.setEnabled(true);
+					btnCloseBallot.setEnabled(true);
 				}
 			}
 		});
-		
-		lblNewLabel_2 = new JLabel("ENTER VALID EMPLOYEE ID AND BALLOT NUMBER TO REPORT VOTE COUNTING");
 		
 		chckbxVoteValid = new JCheckBox("Vote Valid");
 		chckbxVoteValid.setAction(actionValid);
@@ -164,17 +206,15 @@ public class BallotVoteCountManagement extends /*JFrame*/ JInternalFrame {
 		}
 		comboBoxPartyList.disable();
 		
-		lblEmployee = new JLabel("UNIDENTIFIED EMPLOYEE");
-		
 		lblBallot = new JLabel("UNIDENTIFIED BALLOT");
 		
 		btnCloseBallot = new JButton("Close Ballot");
+		btnCloseBallot.setEnabled(false);
 		btnCloseBallot.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (voteLogCTRL.isLogged())
 				{
 					voteLogCTRL.closeBallot();
-					lblEmployee.setText(voteLogCTRL.getEmployee());
 					lblBallot.setText(voteLogCTRL.getBallot());
 					btnSaveVote.setEnabled(true);
 				}
@@ -185,53 +225,38 @@ public class BallotVoteCountManagement extends /*JFrame*/ JInternalFrame {
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addGroup(gl_contentPane.createSequentialGroup()
 									.addComponent(chckbxVoteValid, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
 									.addPreferredGap(ComponentPlacement.UNRELATED)
 									.addComponent(comboBoxPartyList, GroupLayout.PREFERRED_SIZE, 241, GroupLayout.PREFERRED_SIZE)
 									.addGap(18)
-									.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-										.addComponent(btnSaveVote)))
+									.addComponent(btnSaveVote))
 								.addGroup(gl_contentPane.createSequentialGroup()
-									.addComponent(lblNewLabel)
+									.addComponent(lblBallot, GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
 									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(tfEmployeeID, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addGap(18)
-									.addComponent(lblNewLabel_1)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(tfBallot, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnLogin))))
-						.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 473, GroupLayout.PREFERRED_SIZE)
+									.addComponent(btnCloseBallot)))
+							.addGap(88))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblEmployee, GroupLayout.PREFERRED_SIZE, 374, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblBallot, GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
+							.addComponent(lblNewLabel_1)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnCloseBallot)))
-					.addGap(88))
+							.addComponent(tfBallot, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnLogin)
+							.addContainerGap(282, Short.MAX_VALUE))))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(26)
-					.addComponent(lblNewLabel_2, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
-					.addGap(31)
+					.addGap(40)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lblNewLabel)
-						.addComponent(tfEmployeeID, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblNewLabel_1)
 						.addComponent(tfBallot, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnLogin))
-					.addPreferredGap(ComponentPlacement.UNRELATED)
-					.addComponent(lblEmployee, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
+					.addPreferredGap(ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblBallot)
 						.addComponent(btnCloseBallot))
@@ -240,8 +265,7 @@ public class BallotVoteCountManagement extends /*JFrame*/ JInternalFrame {
 						.addComponent(chckbxVoteValid)
 						.addComponent(comboBoxPartyList, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnSaveVote))
-					.addGap(18)
-					.addGap(114))
+					.addGap(132))
 		);
 		contentPane.setLayout(gl_contentPane);
 	}

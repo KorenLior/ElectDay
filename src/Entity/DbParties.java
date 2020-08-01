@@ -9,11 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class DbGetPartyList {
+public class DbParties {
 	
-	public DbGetPartyList() {
-		// TODO Auto-generated constructor stub
-	}
 	public static ArrayList<Party> getParties() {
 		 ArrayList<Party> results = new ArrayList<Party>();
 		 try {
